@@ -6,7 +6,11 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.AsyncSubject;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.ReplaySubject;
 
 public class ObservableTest {
     public static void main(String[] args) {
@@ -55,6 +59,37 @@ public class ObservableTest {
         AsyncSubject<String> asyncSubject2 = AsyncSubject.create();
         asyncSubject2.subscribe(System.out::println);
         asyncSubjectSource.subscribe(asyncSubject2);
+        asyncSubject2.onComplete();
+
+        //BehaviorSubject
+        BehaviorSubject<String> behaviorSubject = BehaviorSubject.createDefault("default value");
+        behaviorSubject.subscribe(System.out::println); // print "default value"
+        behaviorSubject.onNext("behaviorSubject 1"); //print "behaviorSubject 1"
+        behaviorSubject.onNext("behaviorSubject 2"); // print "behaviorSubject 2"
+        behaviorSubject.subscribe(System.out::println); // print "behaviorSubject 2"
+        behaviorSubject.onComplete();
+
+        //PublishSubject
+        PublishSubject<String> publishSubject = PublishSubject.create();
+        publishSubject.onNext("publishSubject 1"); // no print
+        publishSubject.subscribe(System.out::println);
+        publishSubject.onNext("publishSubject 2"); //print "publishSubject 2"
+        publishSubject.onNext("publishSubject 3"); //print "publishSubject 3"
+        publishSubject.onComplete();
+
+        //ReplaySubject
+        ReplaySubject<String> replaySubject = ReplaySubject.create();
+        replaySubject.onNext("replaySubject 1");
+        replaySubject.onNext("replaySubject 2");
+        replaySubject.onNext("replaySubject 3");
+        replaySubject.subscribe(System.out::println); // print "replaySubject 1", "replaySubject 2", "replaySubject 3"
+        replaySubject.onNext("replaySubject 4"); // print "replaySubject 3"
+        replaySubject.onComplete();
+
+        //Connectable Observable
+        ConnectableObservable<String> connectableObservable = Observable.fromArray(new String[]{"ConnectableObservable 1", "ConnectableObservable 2", "ConnectableObservable 3"}).publish();
+        connectableObservable.subscribe(System.out::println); // no print
+        connectableObservable.connect(); // print "connectableObservable 1", "connectableObservable 2", "connectableObservable 3"
 
     }
 }
