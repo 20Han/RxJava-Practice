@@ -19,3 +19,10 @@ Disposable 객체를 리턴하는데, 요 클래스는 dispose()와 isDispose()�
 - Observable의 종류
 차가운 Observable : subscribe함수를 호출하여 구독하지 않으면 데이터를 발행x, 웹 요청, 데이터베이스 쿼리, 파일 읽기 등에 적합
 뜨거운 Observable : 구독자와 관계없이 데이터를 발행, 마우스 이벤트 ,키보드 이벤트 등등 실시간으로 들어오는 데이터에 적합
+
+- Subject
+Observable과 Observer 모두로써 동작할 수 있는 클래스
+1. AsyncSubject 클래스
+ onComplete이 발생하면 직전의 onNext로 지정한 데이터를 발행하는 클래스. 직전의 onNext를 제외한 과거의 onNext들은 무시된다. 또한 onComplete이후의 onNext로 지정한 데이터도 무시된다.
+ Observable의 Subscribe에 Observer로써도 지정할 수 있다. 이는 Subject가 Observable과 Observer모두 가지고 있기 때문에 가능하다
+2. BehaviourSubject 클래스

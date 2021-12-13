@@ -6,6 +6,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
+import io.reactivex.subjects.AsyncSubject;
 
 public class ObservableTest {
     public static void main(String[] args) {
@@ -40,6 +41,20 @@ public class ObservableTest {
         Maybe<String> maybeSource = Maybe.just("Hello Maybe");
         maybeSource.subscribe(System.out::println);
 
+        //AsyncSubject as Observable
+        AsyncSubject<String> asyncSubject1 = AsyncSubject.create();
+        asyncSubject1.onNext("asyncSubject as Observable 1");
+        asyncSubject1.onNext("asyncSubject as Observable 2");
+        asyncSubject1.onComplete();
+        asyncSubject1.onNext("asyncSubject as Observable 3");
+        asyncSubject1.subscribe(System.out::println);
+
+        //AsyncSubject as Observable
+        String[] asyncSubjectArr = {"asyncSubject as Observer 1", "asyncSubject as Observer 2"};
+        Observable<String> asyncSubjectSource = Observable.fromArray(asyncSubjectArr);
+        AsyncSubject<String> asyncSubject2 = AsyncSubject.create();
+        asyncSubject2.subscribe(System.out::println);
+        asyncSubjectSource.subscribe(asyncSubject2);
 
     }
 }
