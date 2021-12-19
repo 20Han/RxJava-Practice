@@ -21,3 +21,9 @@
 - switchMap : Observable의 데이터 발행에서 인터리빙을 방지하기위해 기존의 진행중이던 작업을 중지하는 Map함수
 - groupBy : Observable을 기준에 따라 여러 Observable의 그룹으로 만든다
 - scan : reduce와 비슷하지만 중간결과 및 최종 결과를 구독자에게 발행한다
+
+## 결합연산자
+- zip : 입력된 Observable에서 데이터를 모두 새로 발행했을 때 둘을 합친다.
+- combineLatest : 입력된 Observable 중 하나의 데이터가 새로 발행했을 때 마지막 데이터들을 바탕으로 하나의 결과를 산출한다.
+- merge : 여러 Observable에서 데이터가 들어올 때 어느 Observable에서 발행되었는지 신경쓰지 않고 들어온 데이터를 그대로 발행
+- concat : 두 Observable을 연속적으로 발행하는 함수. 한 Observable의 onComplet이 끝나야 다음 Observable이 불린다
