@@ -27,3 +27,9 @@
 - combineLatest : 입력된 Observable 중 하나의 데이터가 새로 발행했을 때 마지막 데이터들을 바탕으로 하나의 결과를 산출한다.
 - merge : 여러 Observable에서 데이터가 들어올 때 어느 Observable에서 발행되었는지 신경쓰지 않고 들어온 데이터를 그대로 발행
 - concat : 두 Observable을 연속적으로 발행하는 함수. 한 Observable의 onComplet이 끝나야 다음 Observable이 불린다
+
+## 조건연산자
+- amb : 가장 먼저 데이터를 발행하는 한 개 의 Observable만을 인식하는 연산자. 나머지 데이터는 무시한다.
+- takeUntil : 특정 값을 발행하면 해당 Observable의 데이터 발행을 중단하고 onComplete 이벤트 발생. predicator혹은 특정 Observable의 데이터를 condition으로 줄 수 있다
+- skipUntil : 특정 값을 발행할때까지 Observable의 데이터 발행을 Observer에게 전달하지 않는다. Observable의 데이터를 condition으로 줄 수 있다
+- all : 발행된 값들의 all 안의 predicator에 일치하면 true를, 아니면 false를 반환한다.
