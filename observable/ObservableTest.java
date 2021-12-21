@@ -1,6 +1,7 @@
 package rxjava.observable;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
@@ -13,7 +14,7 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.ReplaySubject;
 
 public class ObservableTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //just
         Observable.just(1,2,3).subscribe(System.out::println);
 
@@ -53,7 +54,7 @@ public class ObservableTest {
         asyncSubject1.onNext("asyncSubject as Observable 3");
         asyncSubject1.subscribe(System.out::println);
 
-        //AsyncSubject as Observable
+        //AsyncSubject as Observer
         String[] asyncSubjectArr = {"asyncSubject as Observer 1", "asyncSubject as Observer 2"};
         Observable<String> asyncSubjectSource = Observable.fromArray(asyncSubjectArr);
         AsyncSubject<String> asyncSubject2 = AsyncSubject.create();
@@ -89,7 +90,21 @@ public class ObservableTest {
         //Connectable Observable
         ConnectableObservable<String> connectableObservable = Observable.fromArray(new String[]{"ConnectableObservable 1", "ConnectableObservable 2", "ConnectableObservable 3"}).publish();
         connectableObservable.subscribe(System.out::println); // no print
+        Thread.sleep(100);
+        System.out.println("---connectableObservable connect---");
         connectableObservable.connect(); // print "connectableObservable 1", "connectableObservable 2", "connectableObservable 3"
 
+//        PublishSubject subject = PublishSubject.create();
+//        Observable.interval(10, TimeUnit.MILLISECONDS)
+//                .subscribe(subject);
+//        Thread.sleep(100);
+//        subject.subscribe(System.out::println);
+//        Thread.sleep(100);
+
+        ConnectableObservable connectableObservable1 = Observable.interval(10, TimeUnit.MILLISECONDS).publish();
+        connectableObservable1.connect();
+        Thread.sleep(100);
+        connectableObservable1.subscribe(System.out::println);
+        Thread.sleep(100);
     }
 }
